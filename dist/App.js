@@ -2,154 +2,159 @@ import { useState } from "react"; // prop types
 
 import PropTypes from "prop-types"; // @mui components
 
-import { Tabs, Tab, Box } from "@mui/material";
+import { Box, IconButton, TextField } from "@mui/material"; // @mui icons
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { jsx as _jsx } from "react/jsx-runtime";
 import { jsxs as _jsxs } from "react/jsx-runtime";
 
-function TabPanel(props) {
-  const {
-    children,
-    value,
-    index,
-    ...other
-  } = props;
-  return /*#__PURE__*/_jsx(Box, {
-    role: "tabpanel",
-    hidden: value !== index,
-    id: `tabpanel-${index}`,
-    "aria-labelledby": `tab-${index}`,
-    ...other,
-    children: value === index && /*#__PURE__*/_jsx(Box, {
-      sx: {
-        p: 3
-      },
-      children: children
-    })
-  });
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node.isRequired,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired
-};
-
-const SitoMUIPasswordTextfield = props => {
+const SitoMUIPasswordTextfield = (props) => {
   const {
     id,
-    name,
-    className,
-    color,
-    content,
-    tabs,
-    value,
-    onChange,
-    tabsAtTop,
-    tabsAtBottom,
     sx,
-    tabsContainerSx,
-    tabsSx,
-    contentSx,
-    style,
-    icons,
-    iconsPosition
+    name,
+    color,
+    label,
+    error,
+    value,
+    iconSx,
+    inputSx,
+    variant,
+    onInput,
+    required,
+    disabled,
+    onChange,
+    className,
+    onInvalid,
+    placeholder,
+    onIconClick,
+    onMouseDown,
+    defaultValue,
   } = props;
-  const [localTab, setLocalTab] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
+  const [localValue, setLocalValue] = useState("");
 
-  const localOnChange = (event, newTab) => setLocalTab(newTab);
+  const onLocalChange = (e) => setLocalValue(e.target.value);
 
-  return /*#__PURE__*/_jsxs(Box, {
-    id: id,
-    name: name,
-    className: className,
+  const onLocalIconClick = () => setShowPassword(!showPassword);
+
+  const onLocalMouseDown = (event) => event.preventDefault();
+
+  const parsedInputSx = {
+    width: "100%",
+    ...inputSx,
+  };
+  const parsedIconSx = {
+    position: "absolute",
+    right: "1%",
+    top: "50%",
+    transform: "translateY(-50%)",
+    ...iconSx,
+  };
+  return /*#__PURE__*/ _jsxs(Box, {
     sx: {
-      width: "100%",
-      ...sx
+      position: "relative",
+      ...sx,
     },
-    style: { ...style
-    },
-    children: [tabsAtTop && /*#__PURE__*/_jsx(Box, {
-      sx: {
-        borderBottom: 1,
-        borderColor: "divider",
-        ...tabsContainerSx
-      },
-      children: /*#__PURE__*/_jsx(Tabs, {
-        textColor: color,
-        indicatorColor: color,
-        value: value || localTab,
-        onChange: onChange || localOnChange,
-        sx: { ...tabsSx
-        },
-        children: tabs && tabs.map((item, i) => /*#__PURE__*/_jsx(Tab, {
-          label: item,
-          component: "a",
-          icon: icons[i] || "",
-          href: `#${item}`,
-          iconPosition: iconsPosition[i] || "start"
-        }, item))
-      })
-    }), content && content.map((item, i) => /*#__PURE__*/_jsx(TabPanel, {
-      value: value || localTab,
-      index: i,
-      children: item
-    }, `tc${i}`)), tabsAtBottom && /*#__PURE__*/_jsx(Box, {
-      sx: {
-        borderBottom: 1,
-        borderColor: "divider",
-        ...tabsContainerSx
-      },
-      children: /*#__PURE__*/_jsx(Tabs, {
-        textColor: "primary",
-        indicatorColor: "primary",
-        value: value,
-        onChange: onChange,
-        sx: { ...contentSx
-        },
-        children: tabs.map((item, i) => /*#__PURE__*/_jsx(Tab, {
-          component: "a",
-          href: `#${item}`,
-          label: item
-        }, item))
-      })
-    })]
+    children: [
+      /*#__PURE__*/ _jsx(TextField, {
+        id: id,
+        name: name,
+        error: error,
+        label: label,
+        color: color,
+        variant: variant,
+        sx: parsedInputSx,
+        disabled: disabled,
+        required: required,
+        className: className,
+        placeholder: placeholder,
+        onInput: onInput || null,
+        value: value || localValue,
+        defaultValue: defaultValue,
+        onInvalid: onInvalid || null,
+        onChange: onChange || onLocalChange,
+        type: showPassword ? "text" : "password",
+      }),
+      /*#__PURE__*/ _jsx(IconButton, {
+        sx: parsedIconSx,
+        onClick: onIconClick || onLocalIconClick,
+        onMouseDown: onMouseDown || onLocalMouseDown,
+        children: showPassword
+          ? /*#__PURE__*/ _jsx(VisibilityOff, {})
+          : /*#__PURE__*/ _jsx(Visibility, {}),
+      }),
+    ],
   });
 };
 
 SitoMUIPasswordTextfield.defaultProps = {
   id: undefined,
   name: undefined,
-  className: undefined,
+  label: undefined,
   color: "primary",
-  tabsAtTop: true,
-  tabsAtBottom: false,
+  variant: "outlined",
+  className: undefined,
+  placeholder: undefined,
+  error: false,
+  disabled: false,
+  onInput: undefined,
   onChange: undefined,
-  value: 0,
+  onInvalid: undefined,
+  onIconClick: undefined,
+  onMouseDown: undefined,
+  value: undefined,
+  default: undefined,
   sx: {},
-  tabsContainerSx: {},
-  tabsSx: {},
-  contentSx: {},
-  style: {},
-  icon: [],
-  iconsPosition: []
+  inputSx: {},
+  iconSx: {},
 };
 SitoMUIPasswordTextfield.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
+  label: PropTypes.string,
+  color: PropTypes.oneOf([
+    "primary",
+    "secondary",
+    "error",
+    "info",
+    "success",
+    "warning",
+    "string",
+  ]),
+  variant: PropTypes.oneOf(["filled", "outlined", "standard"]),
   className: PropTypes.string,
-  color: PropTypes.string,
-  tabsAtTop: PropTypes.bool,
-  tabsAtBottom: PropTypes.bool,
-  content: PropTypes.arrayOf(PropTypes.node).isRequired,
-  tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  value: PropTypes.number,
+  placeholder: PropTypes.string,
+  error: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onInput: PropTypes.func,
   onChange: PropTypes.func,
-  icon: PropTypes.arrayOf(PropTypes.node),
-  iconsPosition: PropTypes.arrayOf(PropTypes.oneOf(["start", "end", "bottom", "top"])),
-  sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-  tabsContainerSx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-  tabsSx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-  contentSx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-  style: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
+  onInvalid: PropTypes.func,
+  onIconClick: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  sx: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
+    ),
+    PropTypes.func,
+    PropTypes.object,
+  ]),
+  inputSx: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
+    ),
+    PropTypes.func,
+    PropTypes.object,
+  ]),
+  iconSx: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
+    ),
+    PropTypes.func,
+    PropTypes.object,
+  ]),
 };
 export default SitoMUIPasswordTextfield;
