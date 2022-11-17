@@ -30,7 +30,6 @@ const SitoMUIPasswordTextfield = (props) => {
     onInvalid,
     placeholder,
     onIconClick,
-    onMouseDown,
     defaultValue,
   } = props;
 
@@ -81,7 +80,7 @@ const SitoMUIPasswordTextfield = (props) => {
       <IconButton
         sx={parsedIconSx}
         onClick={onIconClick || onLocalIconClick}
-        onMouseDown={onMouseDown || onLocalMouseDown}
+        onMouseDown={onLocalMouseDown}
       >
         {showPassword ? <VisibilityOff /> : <Visibility />}
       </IconButton>
@@ -103,9 +102,8 @@ SitoMUIPasswordTextfield.defaultProps = {
   onChange: undefined,
   onInvalid: undefined,
   onIconClick: undefined,
-  onMouseDown: undefined,
   value: undefined,
-  default: undefined,
+  defaultValue: undefined,
   sx: {},
   inputSx: {},
   iconSx: {},
@@ -133,7 +131,6 @@ SitoMUIPasswordTextfield.propTypes = {
   onChange: PropTypes.func,
   onInvalid: PropTypes.func,
   onIconClick: PropTypes.func,
-  onMouseDown: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   sx: PropTypes.oneOfType([
