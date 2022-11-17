@@ -4,146 +4,138 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 // @mui components
-import { Tabs, Tab, Box } from "@mui/material";
+import { Box, IconButton, TextField } from "@mui/material";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+// @mui icons
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-  return (
-    <Box
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </Box>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node.isRequired,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-const SitoMUITabView = (props) => {
+const SitoMUIPasswordTextfield = (props) => {
   const {
     id,
-    name,
-    className,
-    color,
-    content,
-    tabs,
-    value,
-    onChange,
-    tabsAtTop,
-    tabsAtBottom,
     sx,
-    tabsContainerSx,
-    tabsSx,
-    contentSx,
-    style,
-    icons,
-    iconsPosition,
+    name,
+    color,
+    label,
+    error,
+    value,
+    iconSx,
+    inputSx,
+    variant,
+    onInput,
+    required,
+    disabled,
+    onChange,
+    className,
+    onInvalid,
+    placeholder,
+    onIconClick,
+    onMouseDown,
+    defaultValue,
   } = props;
 
-  const [localTab, setLocalTab] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const localOnChange = (event, newTab) => setLocalTab(newTab);
+  const [localValue, setLocalValue] = useState("");
+
+  const onLocalChange = (e) => setLocalValue(e.target.value);
+
+  const onLocalIconClick = () => setShowPassword(!showPassword);
+
+  const onLocalMouseDown = (event) => event.preventDefault();
+
+  const parsedInputSx = {
+    width: "100%",
+    ...inputSx,
+  };
+
+  const parsedIconSx = {
+    position: "absolute",
+    right: "1%",
+    top: "50%",
+    transform: "translateY(-50%)",
+    ...iconSx,
+  };
 
   return (
-    <Box
-      id={id}
-      name={name}
-      className={className}
-      sx={{ width: "100%", ...sx }}
-      style={{ ...style }}
-    >
-      {tabsAtTop && (
-        <Box
-          sx={{ borderBottom: 1, borderColor: "divider", ...tabsContainerSx }}
-        >
-          <Tabs
-            textColor={color}
-            indicatorColor={color}
-            value={value || localTab}
-            onChange={onChange || localOnChange}
-            sx={{ ...tabsSx }}
-          >
-            {tabs && tabs.map((item, i) => (
-              <Tab
-                key={item}
-                label={item}
-                component="a"
-                icon={icons[i] || ""}
-                href={`#${item}`}
-                iconPosition={iconsPosition[i] || "start"}
-              />
-            ))}
-          </Tabs>
-        </Box>
-      )}
-      {content && content.map((item, i) => (
-        <TabPanel key={`tc${i}`} value={value || localTab} index={i}>
-          {item}
-        </TabPanel>
-      ))}
-      {tabsAtBottom && (
-        <Box
-          sx={{ borderBottom: 1, borderColor: "divider", ...tabsContainerSx }}
-        >
-          <Tabs
-            textColor="primary"
-            indicatorColor="primary"
-            value={value}
-            onChange={onChange}
-            sx={{ ...contentSx }}
-          >
-            {tabs.map((item, i) => (
-              <Tab component="a" href={`#${item}`} key={item} label={item} />
-            ))}
-          </Tabs>
-        </Box>
-      )}
+    <Box sx={{ position: "relative", ...sx }}>
+      <TextField
+        id={id}
+        name={name}
+        error={error}
+        label={label}
+        color={color}
+        variant={variant}
+        sx={parsedInputSx}
+        disabled={disabled}
+        required={required}
+        className={className}
+        placeholder={placeholder}
+        onInput={onInput || null}
+        value={value || localValue}
+        defaultValue={defaultValue}
+        onInvalid={onInvalid || null}
+        onChange={onChange || onLocalChange}
+        type={showPassword ? "text" : "password"}
+      />
+      <IconButton
+        sx={parsedIconSx}
+        onClick={onIconClick || onLocalIconClick}
+        onMouseDown={onMouseDown || onLocalMouseDown}
+      >
+        {showPassword ? <VisibilityOff /> : <Visibility />}
+      </IconButton>
     </Box>
   );
 };
 
-SitoMUITabView.defaultProps = {
+SitoMUIPasswordTextfield.defaultProps = {
   id: undefined,
   name: undefined,
-  className: undefined,
+  label: undefined,
   color: "primary",
-  tabsAtTop: true,
-  tabsAtBottom: false,
+  variant: "outlined",
+  className: undefined,
+  placeholder: undefined,
+  error: false,
+  disabled: false,
+  onInput: undefined,
   onChange: undefined,
-  value: 0,
+  onInvalid: undefined,
+  onIconClick: undefined,
+  onMouseDown: undefined,
+  value: undefined,
+  default: undefined,
   sx: {},
-  tabsContainerSx: {},
-  tabsSx: {},
-  contentSx: {},
-  style: {},
-  icon: [],
-  iconsPosition: [],
+  inputSx: {},
+  iconSx: {},
 };
 
-SitoMUITabView.propTypes = {
+SitoMUIPasswordTextfield.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
+  label: PropTypes.string,
+  color: PropTypes.oneOf([
+    "primary",
+    "secondary",
+    "error",
+    "info",
+    "success",
+    "warning",
+    "string",
+  ]),
+  variant: PropTypes.oneOf(["filled", "outlined", "standard"]),
   className: PropTypes.string,
-  color: PropTypes.string,
-  tabsAtTop: PropTypes.bool,
-  tabsAtBottom: PropTypes.bool,
-  content: PropTypes.arrayOf(PropTypes.node).isRequired,
-  tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  value: PropTypes.number,
+  placeholder: PropTypes.string,
+  error: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onInput: PropTypes.func,
   onChange: PropTypes.func,
-  icon: PropTypes.arrayOf(PropTypes.node),
-  iconsPosition: PropTypes.arrayOf(
-    PropTypes.oneOf(["start", "end", "bottom", "top"])
-  ),
+  onInvalid: PropTypes.func,
+  onIconClick: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   sx: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
@@ -151,28 +143,14 @@ SitoMUITabView.propTypes = {
     PropTypes.func,
     PropTypes.object,
   ]),
-  tabsContainerSx: PropTypes.oneOfType([
+  inputSx: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
     ),
     PropTypes.func,
     PropTypes.object,
   ]),
-  tabsSx: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
-    ),
-    PropTypes.func,
-    PropTypes.object,
-  ]),
-  contentSx: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
-    ),
-    PropTypes.func,
-    PropTypes.object,
-  ]),
-  style: PropTypes.oneOfType([
+  iconSx: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])
     ),
@@ -181,4 +159,4 @@ SitoMUITabView.propTypes = {
   ]),
 };
 
-export default SitoMUITabView;
+export default SitoMUIPasswordTextfield;
