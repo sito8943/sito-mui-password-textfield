@@ -5,13 +5,18 @@ Tabs make it easy to explore and switch between different views.
 ### How to use it?
 
 ```
+import { useState } from "react";
 import SitoMUIPasswordTextfield from "sito-mui-password-textfield";
+
+const [password, setPassword] = useState("");
+
+const handlePassword = (e) => setPassword(e.target.value);
 
 function App() {
     return {
         <SitoMUIPasswordTextfield
-            tabs={["Hola", "Adiós"]}
-            content={[<div>Hola</div>, <div>Adiós</div>]}
+            value={password}
+            onChange={handlePassword}
         />
     }
 }
@@ -21,13 +26,18 @@ function App() {
 You can change the name of the tab view, if you don't like its name 😂
 
 ```
-import SitoMUIPasswordTextfield as PasswordTextfield from "sito-mui-password-textfield";
+import { useState } from "react";
+import PasswordField from "sito-mui-password-textfield";
+
+const [password, setPassword] = useState("");
+
+const handlePassword = (e) => setPassword(e.target.value);
 
 function App() {
     return {
-        <PasswordTextfield
-            tabs={["Hola", "Adiós"]}
-            content={[<div>Hola</div>, <div>Adiós</div>]}
+        <PasswordField
+            value={password}
+            onChange={handlePassword}
         />
     }
 }
@@ -37,14 +47,19 @@ function App() {
 You can add your css rules, like `sx` prop for [styled-component](https://emotion.sh/docs/introduction), `style` prop like inline css styles and classNames from your css files
 
 ```
+import { useState } from "react";
 import SitoMUIPasswordTextfield from "sito-mui-password-textfield";
+
+const [password, setPassword] = useState("");
+
+const handlePassword = (e) => setPassword(e.target.value);
 
 function App() {
     return {
         <SitoMUIPasswordTextfield
-            sx={{ width: "350px", height: "350px" }}
-            tabs={["Hola", "Adiós"]}
-            content={[<div>Hola</div>, <div>Adiós</div>]}
+            sx={{ width:"305px" }}
+            value={password}
+            onChange={handlePassword}
         />
     }
 }
