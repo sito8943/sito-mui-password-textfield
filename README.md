@@ -1,15 +1,15 @@
-# Sito MUI TabView
+# Sito MUI PasswordTextfield
 
 Tabs make it easy to explore and switch between different views.
 
 ### How to use it?
 
 ```
-import SitoMUITabView from "sito-mui-tab-view";
+import SitoMUIPasswordTextfield from "sito-mui-password-textfield";
 
 function App() {
     return {
-        <SitoMUITabView
+        <SitoMUIPasswordTextfield
             tabs={["Hola", "Adiós"]}
             content={[<div>Hola</div>, <div>Adiós</div>]}
         />
@@ -21,11 +21,11 @@ function App() {
 You can change the name of the tab view, if you don't like its name 😂
 
 ```
-import SitoMUITabView as TabView from "sito-mui-tab-view";
+import SitoMUIPasswordTextfield as PasswordTextfield from "sito-mui-password-textfield";
 
 function App() {
     return {
-        <TabView
+        <PasswordTextfield
             tabs={["Hola", "Adiós"]}
             content={[<div>Hola</div>, <div>Adiós</div>]}
         />
@@ -37,11 +37,11 @@ function App() {
 You can add your css rules, like `sx` prop for [styled-component](https://emotion.sh/docs/introduction), `style` prop like inline css styles and classNames from your css files
 
 ```
-import SitoMUITabView from "sito-mui-tab-view";
+import SitoMUIPasswordTextfield from "sito-mui-password-textfield";
 
 function App() {
     return {
-        <SitoMUITabView
+        <SitoMUIPasswordTextfield
             sx={{ width: "350px", height: "350px" }}
             tabs={["Hola", "Adiós"]}
             content={[<div>Hola</div>, <div>Adiós</div>]}

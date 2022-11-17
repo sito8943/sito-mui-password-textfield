@@ -34,7 +34,7 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired
 };
 
-const SitoMUITabView = props => {
+const SitoMUIPasswordTextfield = props => {
   const {
     id,
     name,
@@ -116,7 +116,7 @@ const SitoMUITabView = props => {
   });
 };
 
-SitoMUITabView.defaultProps = {
+SitoMUIPasswordTextfield.defaultProps = {
   id: undefined,
   name: undefined,
   className: undefined,
@@ -133,7 +133,7 @@ SitoMUITabView.defaultProps = {
   icon: [],
   iconsPosition: []
 };
-SitoMUITabView.propTypes = {
+SitoMUIPasswordTextfield.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   className: PropTypes.string,
@@ -152,4 +152,4 @@ SitoMUITabView.propTypes = {
   contentSx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
   style: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
 };
-export default SitoMUITabView;
+export default SitoMUIPasswordTextfield;

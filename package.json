@@ -1,5 +1,5 @@
 {
-  "name": "sito-mui-tab-view",
+  "name": "sito-mui-password-textfield",
   "main": "dist/App.js",
   "description": "Componente con tabs dinámicas súper flexible",
   "version": "0.5.2",
@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "author": "SitoNimbus",
-  "repository": "https://github.com/SitoNumbis/sito-mui-tab-view.git",
+  "repository": "https://github.com/SitoNumbis/sito-mui-password-textfield.git",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
